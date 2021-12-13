@@ -104,8 +104,6 @@ public class ViewerSessionEventPresenter extends BaseEventPresenter<SessionEvent
 
             if(ApiParameterBasicStability.isValidPropertyId(eventConfig.getPropertyId())
                     && ApiParameterBasicStability.isValidIdsProvidedInApiCall(eventConfig)
-                    && ApiParameterBasicStability.timingWithEventAndPreviousEventCorrect(eventConfig)
-                    && ApiParameterBasicStability.scalingIsCorrect(eventConfig)
                     && ApiParameterBasicStability.rebufferIsCorrect(eventConfig)){
 
                 serviceApi.sessionEvent(
