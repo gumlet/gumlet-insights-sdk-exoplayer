@@ -74,4 +74,4 @@ gumletInsightsConfig.setCustomData7("DATA7");
 
 ```
 
-A [full example app](https://github.com/gumlet/gumlet-analytics-collector-android/tree/main/app/src) can be seen in the github repo
+A [full example app](https://github.com/gumlet/gumlet-insights-collector-android/tree/main/app/src) can be seen in the github repo
