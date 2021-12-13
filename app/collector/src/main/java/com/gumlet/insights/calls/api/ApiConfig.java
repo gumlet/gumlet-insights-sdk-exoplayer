@@ -9,5 +9,5 @@ public class ApiConfig {
     public static final String CLIENT_VERSION = "3.0";
     public static String SESSION_ID = Util.getRandomCharacterString();
     public static String PLAYER_INSTANCE_ID = Util.getRandomCharacterString();
-    public static final boolean PRODUCTION_ENV = false;
+    public static final boolean PRODUCTION_ENV = true;
 }

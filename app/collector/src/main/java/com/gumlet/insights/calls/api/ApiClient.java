@@ -16,7 +16,11 @@ public class ApiClient {
     public static Retrofit getClient() {
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        if(ApiConfig.PRODUCTION_ENV){
+            interceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
+        }else{
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        }
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
         Gson gson = new GsonBuilder()
