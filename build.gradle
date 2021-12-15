@@ -9,11 +9,26 @@ buildscript {
         classpath "com.android.tools.build:gradle:7.0.3"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
+        //Added for releasing library to Maven Repository
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.18.0'
+        classpath 'org.jetbrains.dokka:dokka-gradle-plugin:1.4.10.2'
+
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+allprojects {
+    plugins.withId("com.vanniktech.maven.publish") {
+        mavenPublish {
+            releaseSigningEnabled = true
+            sonatypeHost = "S01"
+        }
+    }
+    repositories {
+        google()
+        maven { url "https://jitpack.io" }
+    }
 }
+
+apply plugin: "com.vanniktech.maven.publish"

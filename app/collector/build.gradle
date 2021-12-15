@@ -2,6 +2,7 @@ plugins {
     id 'com.android.library'
 }
 apply plugin: 'kotlin-android'
+apply plugin: 'com.vanniktech.maven.publish'
 
 android {
     compileSdk 31
@@ -26,6 +27,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -44,14 +49,12 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava:2.7.2'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
 
-    implementation 'com.an.deviceinfo:deviceinfo:0.1.5'
-
     implementation 'androidx.multidex:multidex:2.0.1'
 
-    implementation "androidx.core:core-ktx:+"
+    implementation "androidx.core:core-ktx:1.7.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    testImplementation 'junit:junit:4+'
+    testImplementation 'junit:junit:4.13.2'
     testImplementation 'com.google.truth:truth:1.0.1'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
