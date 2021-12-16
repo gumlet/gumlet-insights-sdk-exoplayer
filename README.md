@@ -2,26 +2,26 @@
 
 # Getting started
 ## Gradle
-Gumlet Insights integration with Exoplayer for Android native applications helps to collect video insights. 
+Gumlet insights integration with Exoplayer for Android native application helps to collect video insights using Gumlet platform. 
 
-And this line to your main project(app) `build.gradle`
+Follow below steps to integrate gumlet-insights-sdk-exoplayer in your android application.
 
-For Gumlet Exoplayer Collector:
+To use "Gumlet Exoplayer Collector" add below line inside your main project (app) `build.gradle`
+
 ```
 dependencies {
-    implementation 'com.gumlet.gumlet-insights-sdk-exoplayer:collector-exoplayer:0.0.2'
+    implementation 'com.gumlet.gumlet-insights-sdk-exoplayer:collector-exoplayer:1.0.0'
 }
 ```
 
 ## Examples
+#### Basic video insights monitoring using Gumlet Exoplayer SDK
 
-The following example create a Gumlet Insights Config object and attach it to Exoplayer instance.
+Generate property id from [here](https://www.gumlet.com/) and use it below
 
-#### Basic video insights monitoring with Gumlet Exoplayer SDK
 ```java
 // Create a Gumlet Insight's configuration using your Property Id and Context object
 GumletInsightsConfig gumletInsightsConfig = new GumletInsightsConfig("<PROPERTY_ID>", "<CONTEXT>");
-
 
 // Create a Gumlet ExoPlayerCollector object using the GumletInsightsConfig that we have just created
 ExoPlayerCollector insightsCollector = new ExoPlayerCollector(gumletInsightsConfig, <CONTEXT object>);
