@@ -28,6 +28,9 @@ import com.google.android.exoplayer2.upstream.HttpDataSource;
 import com.google.android.exoplayer2.util.Util;
 import com.gumlet.insights.GumletInsightsConfig;
 import com.gumlet.insights.data.CustomData;
+import com.gumlet.insights.data.PlayerData;
+import com.gumlet.insights.data.UserData;
+import com.gumlet.insights.data.VideoMetadata;
 import com.gumlet.insights.example.Sample;
 import com.gumlet.insights.example.Samples;
 import com.gumlet.insights.exoplayer.ExoPlayerCollector;
@@ -230,15 +233,57 @@ public class MainActivity extends AppCompatActivity
             gumletInsightsConfig = new GumletInsightsConfig("<PROPERTY-ID>",this);
 
             // Step 2:
-            gumletInsightsConfig.setTitle("Android Gumlet Insights");
-            gumletInsightsConfig.setCustomUserId("customUserId1");
-            gumletInsightsConfig.setCustomData1("customData1");
-            gumletInsightsConfig.setCustomData2("customData2");
-            gumletInsightsConfig.setCustomData3("customData3");
-            gumletInsightsConfig.setCustomData4("customData4");
-            gumletInsightsConfig.setCustomData5("customData5");
-            gumletInsightsConfig.setCustomData6("customData6");
-            gumletInsightsConfig.setCustomData7("customData7");
+            gumletInsightsConfig.setTitle("EXOPLAYER INSIGHTS");
+            gumletInsightsConfig.setCustomUserId("CUSTOM USER ID");
+
+            // OPTIONAL - SET CUSTOM DATA
+            CustomData customData = new CustomData();
+            customData.setCustomData1("CUSTOM DATA 1");
+            customData.setCustomData2("CUSTOM DATA 2");
+            customData.setCustomData3("CUSTOM DATA 3");
+            customData.setCustomData4("CUSTOM DATA 4");
+            customData.setCustomData5("CUSTOM DATA 5");
+            customData.setCustomData6("CUSTOM DATA 6");
+            customData.setCustomData7("CUSTOM DATA 7");
+            customData.setCustomData8("CUSTOM DATA 8");
+            customData.setCustomData9("CUSTOM DATA 9");
+            customData.setCustomData10("CUSTOM DATA 10");
+            gumletInsightsConfig.setCustomData(customData);
+
+            // OPTIONAL - SET PLAYER NAME AND VERSION
+            PlayerData playerData = new PlayerData();
+            playerData.setPlayerName("PRO PLAYER");
+            playerData.setMetaPageType("IFRAME");
+            playerData.setPlayerIntegrationVersion("1.5.6");
+            gumletInsightsConfig.setPlayerData(playerData);
+
+            // OPTIONAL - SET USER CUSTOM DATA
+            UserData userData = new UserData();
+            userData.setName("TEST USER");
+            userData.setEmail("DEMO@gumlet.com");
+            userData.setPhone("+91 9999999999");
+            userData.setProfileImage("ProfileImage.png");
+            userData.setAddressLine1("ADDRESS 1");
+            userData.setAddressLine2("ADDRESS 2");
+            userData.setCity("CITY");
+            userData.setState("STATE");
+            userData.setCountry("COUNTRY");
+            userData.setZipCode("ZIPCODE");
+            gumletInsightsConfig.setUserData(userData);
+
+            // OPTIONAL - SET VIDEO METADATA
+            VideoMetadata videoMetadata = new VideoMetadata();
+            videoMetadata.setCustomContentTye("CONTENT TYPE");
+            videoMetadata.setCustomVideoDurationMillis(10000L);
+            videoMetadata.setCustomEncodingVariant("ENCODING VARIANT");
+            videoMetadata.setCustomVideoLanguage("VIDEO LANGUAGE");
+            videoMetadata.setCustomVideoId("VIDEO ID");
+            videoMetadata.setCustomVideoSeries("VIDEO SERIES");
+            videoMetadata.setCustomVideoProducer("VIDEO PRODUCER");
+            videoMetadata.setCustomVideoTitle("VIDEO TITLE");
+            videoMetadata.setCustomVideoVariantName("VIDEO VARIENT NAME");
+            videoMetadata.setCustomVideoVariant("VIDEO VARIANT");
+            gumletInsightsConfig.setVideoMetadata(videoMetadata);
 
 
             // Step 3: Create Analytics Collector

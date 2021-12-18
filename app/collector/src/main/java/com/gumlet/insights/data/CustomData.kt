@@ -8,5 +8,8 @@ data class CustomData(
     var customData5: String? = null,
     var customData6: String? = null,
     var customData7: String? = null,
+    var customData8: String? = null,
+    var customData9: String? = null,
+    var customData10: String? = null,
     var experimentName: String? = null
 )

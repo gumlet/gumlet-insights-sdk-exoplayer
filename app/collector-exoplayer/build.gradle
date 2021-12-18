@@ -33,7 +33,11 @@ android {
 
 dependencies {
 
-    api project(':app:collector')
+    if (rootProject.ext.developLocal) {
+        api project(':app:collector')
+    }else{
+        api 'com.gumlet.gumlet-insights-sdk-exoplayer:collector:1.0.0'
+    }
 
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'

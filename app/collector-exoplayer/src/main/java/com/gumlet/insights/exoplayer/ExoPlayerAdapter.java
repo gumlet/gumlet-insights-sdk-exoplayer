@@ -52,6 +52,7 @@ import com.gumlet.insights.config.SourceMetadata;
 import com.gumlet.insights.data.ErrorCode;
 import com.gumlet.insights.data.EventData;
 import com.gumlet.insights.data.SpeedMeasurement;
+import com.gumlet.insights.data.VideoMetadata;
 import com.gumlet.insights.data.manipulators.EventDataManipulator;
 import com.gumlet.insights.data.manipulators.EventDataManipulatorPipeline;
 import com.gumlet.insights.enums.DRMType;
@@ -168,17 +169,29 @@ public class ExoPlayerAdapter implements PlayerAdapter, EventDataManipulator,
         }
 
 
-        playerInstance.setPlayerIntegrationVersion(PlayerType.EXOPLAYER.toString() + "-" + ExoUtil.getPlayerVersion());
-        playerInstance.setPlayerName(PlayerType.EXOPLAYER.name());
+
         playerInstance.setPlayerSoftware("ExoPlayer");
         playerInstance.setPropertyId(this.gumletInsightsConfig.getPropertyId());
-        playerInstance.setCustomData1(this.gumletInsightsConfig.getCustomData1());
-        playerInstance.setCustomData2(this.gumletInsightsConfig.getCustomData2());
-        playerInstance.setCustomData3(this.gumletInsightsConfig.getCustomData3());
-        playerInstance.setCustomData4(this.gumletInsightsConfig.getCustomData4());
-        playerInstance.setCustomData5(this.gumletInsightsConfig.getCustomData5());
-        playerInstance.setCustomData6(this.gumletInsightsConfig.getCustomData6());
-        playerInstance.setCustomData7(this.gumletInsightsConfig.getCustomData7());
+
+        if(this.gumletInsightsConfig.getPlayerData() != null){
+            playerInstance.setPlayerIntegrationVersion(this.gumletInsightsConfig.getPlayerData().getPlayerIntegrationVersion());
+            playerInstance.setPlayerName(this.gumletInsightsConfig.getPlayerData().getPlayerName());
+            playerInstance.setMetaPageType(this.gumletInsightsConfig.getPlayerData().getMetaPageType());
+        }
+
+
+        if(this.gumletInsightsConfig.getCustomData() != null) {
+            playerInstance.setCustomData1(this.gumletInsightsConfig.getCustomData().getCustomData1());
+            playerInstance.setCustomData2(this.gumletInsightsConfig.getCustomData().getCustomData2());
+            playerInstance.setCustomData3(this.gumletInsightsConfig.getCustomData().getCustomData3());
+            playerInstance.setCustomData4(this.gumletInsightsConfig.getCustomData().getCustomData4());
+            playerInstance.setCustomData5(this.gumletInsightsConfig.getCustomData().getCustomData5());
+            playerInstance.setCustomData6(this.gumletInsightsConfig.getCustomData().getCustomData6());
+            playerInstance.setCustomData7(this.gumletInsightsConfig.getCustomData().getCustomData7());
+            playerInstance.setCustomData8(this.gumletInsightsConfig.getCustomData().getCustomData8());
+            playerInstance.setCustomData9(this.gumletInsightsConfig.getCustomData().getCustomData9());
+            playerInstance.setCustomData10(this.gumletInsightsConfig.getCustomData().getCustomData10());
+        }
         playerInstance.setCustomUserId(this.gumletInsightsConfig.getCustomUserId());
 
 
@@ -1256,12 +1269,18 @@ public class ExoPlayerAdapter implements PlayerAdapter, EventDataManipulator,
 
         insightsReporter.setViewerSessionEvent(viewerSessionEvent);
 
-        viewerSessionEvent.setCustomData1(gumletInsightsConfig.getCustomData1());
-        viewerSessionEvent.setCustomData2(gumletInsightsConfig.getCustomData2());
-        viewerSessionEvent.setCustomData3(gumletInsightsConfig.getCustomData3());
-        viewerSessionEvent.setCustomData4(gumletInsightsConfig.getCustomData4());
-        viewerSessionEvent.setCustomData6(gumletInsightsConfig.getCustomData6());
-        viewerSessionEvent.setCustomData7(gumletInsightsConfig.getCustomData7());
+        if(gumletInsightsConfig.getCustomData() != null) {
+            viewerSessionEvent.setCustomData1(gumletInsightsConfig.getCustomData().getCustomData1());
+            viewerSessionEvent.setCustomData2(gumletInsightsConfig.getCustomData().getCustomData2());
+            viewerSessionEvent.setCustomData3(gumletInsightsConfig.getCustomData().getCustomData3());
+            viewerSessionEvent.setCustomData4(gumletInsightsConfig.getCustomData().getCustomData4());
+            viewerSessionEvent.setCustomData5(gumletInsightsConfig.getCustomData().getCustomData5());
+            viewerSessionEvent.setCustomData6(gumletInsightsConfig.getCustomData().getCustomData6());
+            viewerSessionEvent.setCustomData7(gumletInsightsConfig.getCustomData().getCustomData7());
+            viewerSessionEvent.setCustomData8(gumletInsightsConfig.getCustomData().getCustomData8());
+            viewerSessionEvent.setCustomData9(gumletInsightsConfig.getCustomData().getCustomData9());
+            viewerSessionEvent.setCustomData10(gumletInsightsConfig.getCustomData().getCustomData10());
+        }
         viewerSessionEvent.setCustomVideoId(gumletInsightsConfig.getVideoId());
         viewerSessionEvent.setCustomVideoTitle(gumletInsightsConfig.getTitle());
 
@@ -1394,6 +1413,22 @@ public class ExoPlayerAdapter implements PlayerAdapter, EventDataManipulator,
             }
         }
 
+
+        if(this.gumletInsightsConfig.getVideoMetadata() != null){
+            VideoMetadata metadata = this.gumletInsightsConfig.getVideoMetadata();
+
+            viewerSessionEvent.setCustomContentType(metadata.getCustomContentTye());
+            viewerSessionEvent.setCustomVideoDurationMillis(metadata.getCustomVideoDurationMillis());
+            viewerSessionEvent.setCustomEncodingVariant(metadata.getCustomEncodingVariant());
+            viewerSessionEvent.setCustomVideoLanguage(metadata.getCustomVideoLanguage());
+            viewerSessionEvent.setCustomVideoId(metadata.getCustomVideoId());
+            viewerSessionEvent.setCustomVideoSeries(metadata.getCustomVideoSeries());
+            viewerSessionEvent.setCustomVideoProducer(metadata.getCustomVideoProducer());
+            viewerSessionEvent.setCustomVideoTitle(metadata.getCustomVideoTitle());
+            viewerSessionEvent.setCustomVideoVariantName(metadata.getCustomVideoVariantName());
+            viewerSessionEvent.setCustomVideoVariant(metadata.getCustomVideoVariant());
+
+        }
 
         insightsReporter.setViewerSessionEvent(viewerSessionEvent);
 

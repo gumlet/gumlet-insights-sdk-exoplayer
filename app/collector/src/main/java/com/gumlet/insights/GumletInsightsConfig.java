@@ -7,6 +7,9 @@ import android.os.Parcelable;
 import android.text.TextUtils;
 
 import com.gumlet.insights.data.CustomData;
+import com.gumlet.insights.data.PlayerData;
+import com.gumlet.insights.data.UserData;
+import com.gumlet.insights.data.VideoMetadata;
 import com.gumlet.insights.enums.CDNProvider;
 import com.gumlet.insights.enums.PlayerType;
 
@@ -14,13 +17,12 @@ import org.jetbrains.annotations.NotNull;
 
 public class GumletInsightsConfig implements Parcelable {
     private String cdnProvider = CDNProvider.GUMLET;
-    private String customData1;
-    private String customData2;
-    private String customData3;
-    private String customData4;
-    private String customData5;
-    private String customData6;
-    private String customData7;
+
+    private CustomData customData;
+    private PlayerData playerData;
+    private UserData userData;
+    private VideoMetadata videoMetadata;
+
     private String customUserId;
     private String experimentName;
     private String mpdUrl;
@@ -68,13 +70,6 @@ public class GumletInsightsConfig implements Parcelable {
 
     protected GumletInsightsConfig(Parcel in) {
         cdnProvider = in.readString();
-        customData1 = in.readString();
-        customData2 = in.readString();
-        customData3 = in.readString();
-        customData4 = in.readString();
-        customData5 = in.readString();
-        customData6 = in.readString();
-        customData7 = in.readString();
         customUserId = in.readString();
         experimentName = in.readString();
         mpdUrl = in.readString();
@@ -95,13 +90,6 @@ public class GumletInsightsConfig implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(cdnProvider);
-        dest.writeString(customData1);
-        dest.writeString(customData2);
-        dest.writeString(customData3);
-        dest.writeString(customData4);
-        dest.writeString(customData5);
-        dest.writeString(customData6);
-        dest.writeString(customData7);
         dest.writeString(customUserId);
         dest.writeString(experimentName);
         dest.writeString(mpdUrl);
@@ -164,97 +152,6 @@ public class GumletInsightsConfig implements Parcelable {
      */
     public void setCustomUserId(String customUserId) {
         this.customUserId = customUserId;
-    }
-
-    public String getCustomData1() {
-        return customData1;
-    }
-
-    /**
-     * Optional free-form data
-     *
-     * @param customData1
-     */
-    public void setCustomData1(String customData1) {
-        this.customData1 = customData1;
-    }
-
-    public String getCustomData2() {
-        return customData2;
-    }
-
-    /**
-     * Optional free-form data
-     *
-     * @param customData2
-     */
-    public void setCustomData2(String customData2) {
-        this.customData2 = customData2;
-    }
-
-    public String getCustomData3() {
-        return customData3;
-    }
-
-    /**
-     * Optional free-form data
-     *
-     * @param customData3
-     */
-    public void setCustomData3(String customData3) {
-        this.customData3 = customData3;
-    }
-
-    public String getCustomData4() {
-        return customData4;
-    }
-
-    /**
-     * Optional free-form data
-     *
-     * @param customData4
-     */
-    public void setCustomData4(String customData4) {
-        this.customData4 = customData4;
-    }
-
-    public String getCustomData5() {
-        return customData5;
-    }
-
-    /**
-     * Optional free-form data
-     *
-     * @param customData5
-     */
-    public void setCustomData5(String customData5) {
-        this.customData5 = customData5;
-    }
-
-    public String getCustomData6() {
-        return customData6;
-    }
-
-    /**
-     * Optional free-form data Not enabled by default Must be activated for your organization
-     *
-     * @param customData6
-     */
-    public void setCustomData6(String customData6) {
-        this.customData6 = customData6;
-    }
-
-    public String getCustomData7() {
-        return customData7;
-    }
-
-    /**
-     * Optional free-form data Not enabled by default Must be activated for your organization
-     *
-     * @param customData7
-     */
-    public void setCustomData7(String customData7) {
-        this.customData7 = customData7;
     }
 
     /**
@@ -345,27 +242,36 @@ public class GumletInsightsConfig implements Parcelable {
         return randomizeUserId;
     }
 
-    protected CustomData getCustomData() {
-        return new CustomData(
-                this.getCustomData1(),
-                this.getCustomData2(),
-                this.getCustomData3(),
-                this.getCustomData4(),
-                this.getCustomData5(),
-                this.getCustomData6(),
-                this.getCustomData7(),"");
-                //this.getExperimentName());
+    public CustomData getCustomData() {
+        return this.customData;
     }
 
-    protected void setCustomData(CustomData customData) {
-        this.setCustomData1(customData.getCustomData1());
-        this.setCustomData2(customData.getCustomData2());
-        this.setCustomData3(customData.getCustomData3());
-        this.setCustomData4(customData.getCustomData4());
-        this.setCustomData5(customData.getCustomData5());
-        this.setCustomData6(customData.getCustomData6());
-        this.setCustomData7(customData.getCustomData7());
-        //this.setExperimentName(customData.getExperimentName());
+    public void setCustomData(CustomData customData) {
+        this.customData = customData;
+    }
+
+    public PlayerData getPlayerData() {
+        return playerData;
+    }
+
+    public UserData getUserData() {
+        return userData;
+    }
+
+    public void setUserData(UserData userData) {
+        this.userData = userData;
+    }
+
+    public void setPlayerData(PlayerData playerData) {
+        this.playerData = playerData;
+    }
+
+    public VideoMetadata getVideoMetadata() {
+        return videoMetadata;
+    }
+
+    public void setVideoMetadata(VideoMetadata videoMetadata) {
+        this.videoMetadata = videoMetadata;
     }
 
     public void setContext(Context context) {

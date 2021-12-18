@@ -27,6 +27,7 @@ import com.gumlet.insights.data.IEventDataDispatcher;
 import com.gumlet.insights.data.RandomizedUserIdIdProvider;
 import com.gumlet.insights.data.SecureSettingsAndroidIdUserIdProvider;
 import com.gumlet.insights.data.SimpleEventDataDispatcher;
+import com.gumlet.insights.data.UserData;
 import com.gumlet.insights.data.UserIdProvider;
 import com.gumlet.insights.data.manipulators.ManifestUrlEventDataManipulator;
 import com.gumlet.insights.enums.VideoStartFailedReason;
@@ -151,13 +152,19 @@ public class GumletInsights
             }
             ViewerSession session = ViewerSession.getInstance();
             session.setPropertyId(this.gumletInsightsConfig.getPropertyId());
-            session.setCustomData1(this.gumletInsightsConfig.getCustomData1());
-            session.setCustomData2(this.gumletInsightsConfig.getCustomData2());
-            session.setCustomData3(this.gumletInsightsConfig.getCustomData3());
-            session.setCustomData4(this.gumletInsightsConfig.getCustomData4());
-            session.setCustomData5(this.gumletInsightsConfig.getCustomData5());
-            session.setCustomData6(this.gumletInsightsConfig.getCustomData6());
-            session.setCustomData7(this.gumletInsightsConfig.getCustomData7());
+
+            if(this.gumletInsightsConfig.getCustomData() != null) {
+                session.setCustomData1(this.gumletInsightsConfig.getCustomData().getCustomData1());
+                session.setCustomData2(this.gumletInsightsConfig.getCustomData().getCustomData2());
+                session.setCustomData3(this.gumletInsightsConfig.getCustomData().getCustomData3());
+                session.setCustomData4(this.gumletInsightsConfig.getCustomData().getCustomData4());
+                session.setCustomData5(this.gumletInsightsConfig.getCustomData().getCustomData5());
+                session.setCustomData6(this.gumletInsightsConfig.getCustomData().getCustomData6());
+                session.setCustomData7(this.gumletInsightsConfig.getCustomData().getCustomData7());
+                session.setCustomData8(this.gumletInsightsConfig.getCustomData().getCustomData8());
+                session.setCustomData9(this.gumletInsightsConfig.getCustomData().getCustomData9());
+                session.setCustomData10(this.gumletInsightsConfig.getCustomData().getCustomData10());
+            }
             session.setMetaBrowser(this.userIdProvider.userId());
             session.setCustomUserId(this.gumletInsightsConfig.getCustomUserId());
             session.setUserId(this.userIdProvider.userId());
@@ -221,6 +228,22 @@ public class GumletInsights
 
                 }
 
+            }
+
+
+            if(this.gumletInsightsConfig.getUserData() != null){
+
+                UserData data = this.gumletInsightsConfig.getUserData();
+                session.setUserName(data.getName());
+                session.setUserEmail(data.getEmail());
+                session.setUserPhone(data.getPhone());
+                session.setUserProfileImage(data.getProfileImage());
+                session.setUserAddressLine1(data.getAddressLine1());
+                session.setUserAddressLine2(data.getAddressLine2());
+                session.setUserCity(data.getCity());
+                session.setUserState(data.getState());
+                session.setUserCountry(data.getCountry());
+                session.setUserZipcode(data.getZipCode());
             }
 
             ViewerSession.setViewerSession(session);
