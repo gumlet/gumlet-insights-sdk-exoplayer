@@ -166,7 +166,6 @@ public class GumletInsights
                 session.setCustomData10(this.gumletInsightsConfig.getCustomData().getCustomData10());
             }
             session.setMetaBrowser(this.userIdProvider.userId());
-            session.setCustomUserId(this.gumletInsightsConfig.getCustomUserId());
             session.setUserId(this.userIdProvider.userId());
             session.setMetaConnectionSpeed(NetworkUtil.networkConnectionSpeed(gumletInsightsConfig.getContext()));
 
@@ -234,6 +233,7 @@ public class GumletInsights
             if(this.gumletInsightsConfig.getUserData() != null){
 
                 UserData data = this.gumletInsightsConfig.getUserData();
+                session.setCustomUserId(data.getCustomUserId());
                 session.setUserName(data.getName());
                 session.setUserEmail(data.getEmail());
                 session.setUserPhone(data.getPhone());

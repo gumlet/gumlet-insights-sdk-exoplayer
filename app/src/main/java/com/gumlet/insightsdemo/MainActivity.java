@@ -234,7 +234,6 @@ public class MainActivity extends AppCompatActivity
 
             // Step 2:
             gumletInsightsConfig.setTitle("EXOPLAYER INSIGHTS");
-            gumletInsightsConfig.setCustomUserId("CUSTOM USER ID");
 
             // OPTIONAL - SET CUSTOM DATA
             CustomData customData = new CustomData();
@@ -259,6 +258,7 @@ public class MainActivity extends AppCompatActivity
 
             // OPTIONAL - SET USER CUSTOM DATA
             UserData userData = new UserData();
+            userData.setCustomUserId("CUSTOM USER ID");
             userData.setName("TEST USER");
             userData.setEmail("DEMO@gumlet.com");
             userData.setPhone("+91 9999999999");

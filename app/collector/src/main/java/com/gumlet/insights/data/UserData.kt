@@ -1,6 +1,7 @@
 package com.gumlet.insights.data
 
 data class UserData(
+        var customUserId: String? = null,
         var name: String? = null,
         var email: String? = null,
         var phone: String? = null,

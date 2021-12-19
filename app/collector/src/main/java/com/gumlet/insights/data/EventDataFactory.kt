@@ -18,7 +18,7 @@ class EventDataFactory(private val config: GumletInsightsConfig, private val use
                 config.playerKey,
                 if (sourceMetadata == null) config.videoId else sourceMetadata.videoId,
                 if (sourceMetadata == null) config.title else sourceMetadata.title,
-                config.customUserId,
+                if(config.userData != null) config.userData.customUserId else "",
                 if (sourceMetadata == null) config.customData.customData1 else sourceMetadata.customData1,
                 if (sourceMetadata == null) config.customData.customData2 else sourceMetadata.customData2,
                 if (sourceMetadata == null) config.customData.customData3 else sourceMetadata.customData3,

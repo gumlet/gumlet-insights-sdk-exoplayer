@@ -192,8 +192,10 @@ public class ExoPlayerAdapter implements PlayerAdapter, EventDataManipulator,
             playerInstance.setCustomData9(this.gumletInsightsConfig.getCustomData().getCustomData9());
             playerInstance.setCustomData10(this.gumletInsightsConfig.getCustomData().getCustomData10());
         }
-        playerInstance.setCustomUserId(this.gumletInsightsConfig.getCustomUserId());
 
+        if(this.gumletInsightsConfig.getUserData() != null) {
+            playerInstance.setCustomUserId(this.gumletInsightsConfig.getUserData().getCustomUserId());
+        }
 
         PlayerInstance.setPlayerInstance(playerInstance);
         this.insightsReporter.setPlayerInstance(playerInstance);

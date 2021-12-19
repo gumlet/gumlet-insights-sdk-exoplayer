@@ -23,7 +23,6 @@ public class GumletInsightsConfig implements Parcelable {
     private UserData userData;
     private VideoMetadata videoMetadata;
 
-    private String customUserId;
     private String experimentName;
     private String mpdUrl;
     private String m3u8Url;
@@ -70,7 +69,6 @@ public class GumletInsightsConfig implements Parcelable {
 
     protected GumletInsightsConfig(Parcel in) {
         cdnProvider = in.readString();
-        customUserId = in.readString();
         experimentName = in.readString();
         mpdUrl = in.readString();
         m3u8Url = in.readString();
@@ -90,7 +88,6 @@ public class GumletInsightsConfig implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(cdnProvider);
-        dest.writeString(customUserId);
         dest.writeString(experimentName);
         dest.writeString(mpdUrl);
         dest.writeString(m3u8Url);
@@ -139,19 +136,6 @@ public class GumletInsightsConfig implements Parcelable {
      */
     public void setVideoId(String videoId) {
         this.videoId = videoId;
-    }
-
-    public String getCustomUserId() {
-        return customUserId;
-    }
-
-    /**
-     * User-ID in the Customer System
-     *
-     * @param customUserId
-     */
-    public void setCustomUserId(String customUserId) {
-        this.customUserId = customUserId;
     }
 
     /**
