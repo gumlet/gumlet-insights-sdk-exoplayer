@@ -39,8 +39,7 @@ dependencies {
 
     //Exoplayer dependency
     implementation 'com.google.android.exoplayer:exoplayer:2.15.1'
-    implementation project(path: ':app:collector')
-    implementation project(path: ':app:collector-exoplayer')
+    implementation 'com.gumlet.gumlet-insights-sdk-exoplayer:collector-exoplayer:1.0.1'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
