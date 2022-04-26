@@ -230,6 +230,7 @@ public class MainActivity extends AppCompatActivity
             player.addListener(this);
 
             // Step 1: Create your insights config object
+            // Please use a Valid <PROPERTY-ID>
             gumletInsightsConfig = new GumletInsightsConfig("<PROPERTY-ID>",this);
 
             // Step 2:
