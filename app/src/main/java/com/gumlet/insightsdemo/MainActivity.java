@@ -230,8 +230,8 @@ public class MainActivity extends AppCompatActivity
             player.addListener(this);
 
             // Step 1: Create your insights config object
-            // Please use a Valid <PROPERTY-ID> #L8pLClZd
-            gumletInsightsConfig = new GumletInsightsConfig("PROPERTY",this);
+            // Please use a Valid <PROPERTY-ID>
+            gumletInsightsConfig = new GumletInsightsConfig("<PROPERTY-ID>",this);
 
             // Step 2:
             gumletInsightsConfig.setTitle("EXOPLAYER INSIGHTS");
