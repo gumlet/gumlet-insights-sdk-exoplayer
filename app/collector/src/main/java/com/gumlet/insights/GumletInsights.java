@@ -12,6 +12,8 @@ import com.gumlet.insights.adapters.AdAdapter;
 import com.gumlet.insights.adapters.PlayerAdapter;
 import com.gumlet.insights.calls.AnalyticsCallback;
 import com.gumlet.insights.calls.InsightsReporter;
+import com.gumlet.insights.calls.api.ApiClient;
+import com.gumlet.insights.calls.api.ServiceApiClass;
 import com.gumlet.insights.calls.presenter.ViewerSessionEventPresenter;
 import com.gumlet.insights.config.SourceMetadata;
 import com.gumlet.insights.data.AdEventData;
@@ -49,6 +51,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Calendar;
 import java.util.Collection;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * An insights plugin that sends video playback insights to Gumlet Analytics servers. Currently
@@ -122,7 +128,32 @@ public class GumletInsights
         if (this.gumletInsightsConfig.getAds()) {
             this.adAnalytics = new GumletAdInsights(this);
         }
-        createViewerSession();
+
+        ApiClient.getClientForPropertyCheck().create(ServiceApiClass.class)
+                .checkPropertyId(gumletInsightsConfig.getPropertyId())
+                .enqueue(new Callback<PropertyCheckResponse>() {
+                    @Override
+                    public void onResponse(Call<PropertyCheckResponse> call, Response<PropertyCheckResponse> response) {
+                        try {
+                            if(response.isSuccessful()) {
+                                if (response.body().validated) {
+                                    createViewerSession();
+                                } else {
+                                    throw new IllegalArgumentException("Invalid propertyID");
+                                }
+                            } else {
+                                throw new IllegalArgumentException("Invalid propertyID");
+                            }
+                        } catch (Exception e){
+                            GumletLog.e(TAG, "Invalid propertyID");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<PropertyCheckResponse> call, Throwable t) {
+                        //createViewerSession();
+                    }
+                });
 
     }
 
@@ -251,13 +282,37 @@ public class GumletInsights
 
             if(NetworkUtil.isNetworkAvailable(gumletInsightsConfig.getContext())
                     && NetworkUtil.isDataAvailable(gumletInsightsConfig.getContext())) {
-                new ViewerSessionEventPresenter().LogSessionEvent(session,null);
+                ApiClient.getClientForPropertyCheck().create(ServiceApiClass.class)
+                        .checkPropertyId(gumletInsightsConfig.getPropertyId())
+                        .enqueue(new Callback<PropertyCheckResponse>() {
+                            @Override
+                            public void onResponse(Call<PropertyCheckResponse> call, Response<PropertyCheckResponse> response) {
+                                try {
+                                    if(response.isSuccessful()) {
+                                        if(response.body().validated){
+                                            new ViewerSessionEventPresenter().LogSessionEvent(session,null);
+                                        } else {
+                                            throw new IllegalArgumentException("Invalid propertyID");
+                                        }
+                                    } else {
+                                        throw new IllegalArgumentException("Invalid propertyID");
+                                    }
+                                } catch (IllegalArgumentException e){
+                                    GumletLog.e(TAG, "Invalid propertyID");
+                                }
 
-                this.gumletPreferenceManager.setSessionTimeout(Calendar.getInstance().getTimeInMillis());
+                                gumletPreferenceManager.setSessionTimeout(Calendar.getInstance().getTimeInMillis());
 
-                if(session != null) {
-                    this.gumletPreferenceManager.saveSession(session);
-                }
+                                if(session != null) {
+                                    gumletPreferenceManager.saveSession(session);
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<PropertyCheckResponse> call, Throwable t) {
+                                // TODO Check if any message needed
+                            }
+                        });
             }
 
         }

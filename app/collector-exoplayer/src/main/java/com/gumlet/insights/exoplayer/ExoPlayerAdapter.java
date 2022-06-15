@@ -38,12 +38,15 @@ import com.google.android.exoplayer2.source.hls.playlist.HlsMediaPlaylist;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.gumlet.insights.GumletInsightsConfig;
 import com.gumlet.insights.PlayerInstance;
+import com.gumlet.insights.PropertyCheckResponse;
 import com.gumlet.insights.ViewerSession;
 import com.gumlet.insights.ViewerSessionEvent;
 import com.gumlet.insights.adapters.PlayerAdapter;
 import com.gumlet.insights.calls.AnalyticsCallback;
 import com.gumlet.insights.calls.InsightsReporter;
 import com.gumlet.insights.calls.RebufferListener;
+import com.gumlet.insights.calls.api.ApiClient;
+import com.gumlet.insights.calls.api.ServiceApiClass;
 import com.gumlet.insights.calls.events.PlayerEvents;
 import com.gumlet.insights.calls.events.SessionEvents;
 import com.gumlet.insights.calls.presenter.PlayerInstancePresenter;
@@ -78,6 +81,10 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ExoPlayerAdapter implements PlayerAdapter, EventDataManipulator,
         SessionEvents,
@@ -202,7 +209,31 @@ public class ExoPlayerAdapter implements PlayerAdapter, EventDataManipulator,
 
         if(NetworkUtil.isNetworkAvailable(gumletInsightsConfig.getContext())
                 && NetworkUtil.isDataAvailable(gumletInsightsConfig.getContext())) {
-            playerInstancePresenter.playerInit(this.insightsReporter.getPlayerInstance(),this);
+            ApiClient.getClientForPropertyCheck().create(ServiceApiClass.class)
+                    .checkPropertyId(gumletInsightsConfig.getPropertyId())
+                    .enqueue(new Callback<PropertyCheckResponse>() {
+                        @Override
+                        public void onResponse(Call<PropertyCheckResponse> call, Response<PropertyCheckResponse> response) {
+                            try {
+                                if(response.isSuccessful()) {
+                                    if(response.body().validated){
+                                        playerInstancePresenter.playerInit(insightsReporter.getPlayerInstance(),ExoPlayerAdapter.this);
+                                    } else {
+                                        throw new IllegalArgumentException("Invalid propertyID");
+                                    }
+                                } else {
+                                    throw new IllegalArgumentException("Invalid propertyID");
+                                }
+                            } catch (IllegalArgumentException e){
+                                GumletLog.e(TAG, "Invalid propertyID");
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<PropertyCheckResponse> call, Throwable t) {
+                            // TODO Check if any message needed
+                        }
+                    });
         }
     }
 
@@ -1436,12 +1467,35 @@ public class ExoPlayerAdapter implements PlayerAdapter, EventDataManipulator,
 
         if(NetworkUtil.isNetworkAvailable(gumletInsightsConfig.getContext()) && NetworkUtil.isDataAvailable(gumletInsightsConfig.getContext())) {
 
-            viewerSessionEventPresenter.sessionEvent(insightsReporter.getViewerSessionEvent(), ExoPlayerAdapter.this);
+            ApiClient.getClientForPropertyCheck().create(ServiceApiClass.class)
+                    .checkPropertyId(gumletInsightsConfig.getPropertyId())
+                    .enqueue(new Callback<PropertyCheckResponse>() {
+                        @Override
+                        public void onResponse(Call<PropertyCheckResponse> call, Response<PropertyCheckResponse> response) {
+                            try{
+                                if(response.isSuccessful()) {
+                                    if(response.body().validated){
+                                        viewerSessionEventPresenter.sessionEvent(insightsReporter.getViewerSessionEvent(), ExoPlayerAdapter.this);
+                                    } else {
+                                        throw new IllegalArgumentException("Invalid propertyID");
+                                    }
+                                } else {
+                                    throw new IllegalArgumentException("Invalid propertyID");
+                                }
+                            } catch (IllegalArgumentException e){
+                                GumletLog.e(TAG, "Invalid propertyID");
+                            }
 
+                            previousEvent = insightsReporter.getViewerSessionEvent().clone();
+                            millisFromPreviousEvent = Calendar.getInstance().getTimeInMillis();
+                        }
+
+                        @Override
+                        public void onFailure(Call<PropertyCheckResponse> call, Throwable t) {
+                            // TODO Check if any message needed
+                        }
+                    });
         }
-
-        previousEvent = insightsReporter.getViewerSessionEvent().clone();
-        millisFromPreviousEvent = Calendar.getInstance().getTimeInMillis();
     }
 
     @Override
