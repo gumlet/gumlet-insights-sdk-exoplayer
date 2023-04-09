@@ -19,7 +19,7 @@ buildscript {
 }
 
 ext {
-    developLocal = System.getProperty("developmentMode", "true").toBoolean()
+    developLocal = System.getProperty("developmentMode", "false").toBoolean()
 }
 
 allprojects {

@@ -35,7 +35,7 @@ dependencies {
     if (rootProject.ext.developLocal) {
         api project(':app:collector')
     }else{
-        api 'com.gumlet.gumlet-insights-sdk-exoplayer:collector:1.0.1'
+        api 'com.gumlet.gumlet-insights-sdk-exoplayer:collector:1.0.2'
     }
 
     //Retrofit
